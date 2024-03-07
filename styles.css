@@ -1,0 +1,97 @@
+/* styles.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+.module {
+  background: #fff;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.form-row {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+label {
+  display: block;
+  width: 100%; /* 让 label 在小屏幕设备上占据整行 */
+  max-width: 120px; /* 设置最大宽度以防止在大屏幕设备上过宽 */
+}
+
+input[type="text"],
+select {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-left: 0; /* 取消默认的 margin */
+  width: calc(100% - 130px); /* 计算 input 和 select 的宽度，留出 label 的宽度 */
+}
+
+button {
+  background: #009688;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #00796b;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.form-row {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+label {
+  flex: 0 0 33.33%; /* 每个 label 占据父容器的三分之一 */
+  max-width: 120px;
+}
+
+input[type="text"],
+select {
+  flex: 1 1 calc(33.33% - 120px); /* 计算 input 和 select 的宽度，留出 label 的宽度 */
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-left: 0;
+}
