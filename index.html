@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <title>无线电通联记录</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="module">
+      <label for="callSignInput">输入呼号:</label>
+      <input type="text" id="callSignInput" v-model.trim="newLog.callSign" @input="updateCallSign" @input="getCallSignExplanation" />
+      <span>出现次数: {{ callSignCount }}</span>
+    </div>
+    <div class="module">
+      <h2>呼号字母解释法</h2>
+      <p>{{ callSignExplanation }}</p>
+    </div>
+
+    <div class="module">
+      <label for="currentTime">北京时间:</label>
+      <span id="currentTime">{{ currentTime }}</span>
+    </div>
+
+    <form class="module" @submit.prevent="addLog">
+      <div class="form-row">
+        <label for="mode">模式:</label>
+        <select id="mode" v-model="newLog.mode">
+          <option value="FM">FM</option>
+          <option value="AM">AM</option>
+          <option value="SSB">SSB</option>
+          <option value="CW">CW</option>
+          <option value="Digital">Digital</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="frequency">频率:</label>
+        <select id="frequency" v-model="newLog.frequency">
+          <option value="2m">2m</option>
+          <option value="70cm">70cm</option>
+          <option value="20m">20m</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="signalReportReceived">信号报告(收):</label>
+        <input type="text" id="signalReportReceived" v-model="newLog.signalReportReceived">
+      </div>
+      <div class="form-row">
+        <label for="signalReportSent">对方信号(发):</label>
+        <input type="text" id="signalReportSent" v-model="newLog.signalReportSent">
+      </div>
+      <div class="form-row">
+        <label for="equipment">使用设备(发):</label>
+        <select id="equipment" v-model="newLog.equipment">
+          <option value="Handheld">手持对讲机</option>
+          <option value="Mobile">车载台</option>
+          <option value="Base">基地台</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="antenna">天线(发):</label>
+        <select id="antenna" v-model="newLog.antenna">
+          <option value="Dipole">偶极天线</option>
+          <option value="Yagi">八木天线</option>
+          <option value="Vertical">垂直天线</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="power">功率(发):</label>
+        <select id="power" v-model="newLog.power">
+          <option value="5W">5瓦</option>
+          <option value="50W">50瓦</option>
+          <option value="100W">100瓦</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="communicationType">通联类型:</label>
+        <select id="communicationType" v-model="newLog.communicationType">
+          <option value="CW">CW</option>
+          <option value="SSB">SSB</option>
+          <option value="AM">AM</option>
+          <option value="FM">FM</option>
+          <option value="Digital">Digital</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="province">省份:</label>
+        <select id="province" v-model="newLog.province" @change="updateCities">
+          <option value="">请选择省份</option>
+          <option v-for="province in provinces" :value="province">{{ province }}</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="city">城市:</label>
+        <select id="city" v-model="newLog.city" :disabled="!newLog.province">
+          <option value="">请选择城市</option>
+          <option v-for="city in availableCities" :value="city">{{ city }}</option>
+        </select>
+      </div>
+      <button type="submit">添加通联记录</button>
+    </form>
+
+    <div class="module">
+      <h1>最近通联日志</h1>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>呼号</th>
+          <th>通联时间</th>
+          <th>模式</th>
+          <th>频率</th>
+          <th>信号报告(收)</th>
+          <th>对方信号(发)</th>
+          <th>使用设备(发)</th>
+          <th>天线(发)</th>
+          <th>功率(发)</th>
+          <th>通联类型</th>
+          <th>QTH</th>
+        </tr>
+        <tbody>
+          <tr v-for="(log, index) in communicationLogs" :key="index">
+            <td>{{ index + 1 }}</td>
+            <td>{{ log.callSign }}</td>
+            <td>{{ log.time }}</td>
+            <td>{{ log.mode }}</td>
+            <td>{{ log.frequency }}</td>
+            <td>{{ log.signalReportReceived }}</td>
+            <td>{{ log.signalReportSent }}</td>
+            <td>{{ log.equipment }}</td>
+            <td>{{ log.antenna }}</td>
+            <td>{{ log.power }}</td>
+            <td>{{ log.communicationType }}</td>
+            <td>{{ log.province }} {{ log.city }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button @click="exportLogs">导出通联记录</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
